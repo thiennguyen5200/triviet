@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col-md-12">
+      <nb-card>
+        <nb-card-header>Using the Grid</nb-card-header>
+        <nb-card-body>
+          <form [formGroup]="motelForm" (ngSubmit)="onSubmit()" class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="label col-sm-3 col-form-label">Tên nhà trọ:</label>
+                        <div class="col-sm-9">
+                            <input type="text" nbInput fullWidth formControlName="motel_name" placeholder="Tên nhà trọ" >
+                        </div>
+                        </div>
+                        <div class="form-group row">
+                        <label class="label col-sm-3 col-form-label">Số lượng phòng:</label>
+                        <div class="col-sm-9">
+                            <input type="number" nbInput fullWidth formControlName="motel_amount"  placeholder="Số lượng phòng">
+                        </div>
+                        </div>
+                        <div class="form-group row">
+                        <label class="label col-sm-3 col-form-label">Mô tả:</label>
+                        <div class="col-sm-9">
+                            <textarea nbInput fullWidth placeholder="Mô tả"></textarea>
+                        </div>
+                        </div>
+                        <div class="form-group row">
+                        <label class="label col-sm-3 col-form-label">Địa chỉ:</label>
+                        <div class="col-sm-9">
+                            <input type="text" nbInput fullWidth formControlName="motel_Address"  placeholder="Địa chỉ" >
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="label col-sm-3 col-form-label">Tỉnh/Thành:</label>
+                        <div class="col-sm-9">
+                            <nb-select selected="item[1]" fullWidth 
+                            [(ngModel)]="_vSelectCity" formControlName="value_city" 
+                            (selectedChange)="onSelect_City()">
+                            <nb-option [value]="item" *ngFor="let item of _local">{{item.name}}</nb-option>
+                            </nb-select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="label col-sm-3 col-form-label">Quận:</label>
+                        <div class="col-sm-9" *ngIf="_isSelectDistricts; else elseSelectDis">
+                            <nb-select selected="1" fullWidth 
+                            [(ngModel)]="_vSelectDis" formControlName="value_dis"
+                            (selectedChange)="onSelect_Dis()">
+                            <nb-option [value]="districts" *ngFor="let districts of _vSelectCity.districts">{{districts.name}}</nb-option>
+                            </nb-select>
+                        </div>
+                        <ng-template #elseSelectDis>
+                            <div class="col-sm-9">
+                            <nb-select selected="1" fullWidth>
+                                <nb-option value="1">----------</nb-option>
+                            </nb-select>
+                            </div>
+                        </ng-template>
+                    </div>
+                    <div class="form-group row">
+                        <label class="label col-sm-3 col-form-label">Phường/Xã:</label>
+                        <div class="col-sm-9" *ngIf="_isSelectWards; else elseSelectWards">
+                            <nb-select selected="1" fullWidth 
+                            [(ngModel)]="_vSelectWards" formControlName="value_wards"
+                            (selectedChange)="onSelect_Wards()">
+                            <nb-option [value]="item" *ngFor="let item of _vSelectDis.wards">{{item.name}}</nb-option>
+                            </nb-select>
+                        </div>
+                        <ng-template #elseSelectWards>
+                            <div class="col-sm-9">
+                            <nb-select selected="1" fullWidth>
+                                <nb-option value="1">----------</nb-option>
+                            </nb-select>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="form-group row">
+              <div class="offset-sm-12 col-sm-12">
+                <button type="submit" nbButton status="primary">Thêm</button>
+              </div>
+            </div>
+          </form>
+        </nb-card-body>
+      </nb-card>
+    </div>
+</div>
